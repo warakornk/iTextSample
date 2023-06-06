@@ -38,5 +38,45 @@ namespace iTextSample.Controllers
 
             return Ok($"please check file name \"{outputfilename}\" output folder");
         }
+
+        [HttpGet("Sample_04")]
+        public async Task<IActionResult> GetSample04Async()
+        {
+            string outputfilename = await _pdfService.Function_04();
+
+            return Ok($"please check file name \"{outputfilename}\" output folder");
+        }
+
+        [HttpGet("Sample_05")]
+        public async Task<IActionResult> GetSample05Async()
+        {
+            string outputfilename = await _pdfService.Function_05();
+
+            return Ok($"please check file name \"{outputfilename}\" output folder");
+        }
+
+        [HttpGet("Sample_06")]
+        public async Task<IActionResult> GetSample06Async()
+        {
+            string outputfilename = await _pdfService.Function_06();
+
+            return Ok($"please check file name \"{outputfilename}\" output folder");
+        }
+
+        [HttpGet("Sample_07")]
+        public async Task<IActionResult> GetSample07Async()
+        {
+            string outputfilename = await _pdfService.Function_07();
+
+            return Ok($"please check file name \"{outputfilename}\" output folder");
+        }
+
+        [HttpGet("Sample_08")]
+        public async Task<IActionResult> GetSample08Async()
+        {
+            string outputfilename = await _pdfService.Function_08();
+
+            return Ok($"please check file name \"{outputfilename}\" output folder");
+        }
     }
 }

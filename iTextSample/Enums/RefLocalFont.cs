@@ -2,6 +2,10 @@
 {
     public enum RefLocalFont
     {
+        CordiaNew,
+        MaterialSymbolsRounded,
+        THCharmonman,
+        THCharmonmanBold,
         THSarabun,
         THSarabunItalic,
         THSarabunBold,
@@ -9,6 +13,6 @@
         Webdings,
         Wingding,
         Wingdng2,
-        Wingdng3
+        Wingdng3,
     }
 }

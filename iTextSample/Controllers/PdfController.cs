@@ -78,5 +78,13 @@ namespace iTextSample.Controllers
 
             return Ok($"please check file name \"{outputfilename}\" output folder");
         }
+
+        [HttpGet("Sample_09")]
+        public async Task<IActionResult> GetSample09Async()
+        {
+            string outputfilename = await _pdfService.Function_09();
+
+            return Ok($"please check file name \"{outputfilename}\" output folder");
+        }
     }
 }

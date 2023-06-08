@@ -17,5 +17,7 @@
         public Task<string> Function_07();
 
         public Task<string> Function_08();
+
+        public Task<string> Function_09();
     }
 }

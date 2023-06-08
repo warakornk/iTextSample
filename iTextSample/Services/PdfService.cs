@@ -326,5 +326,63 @@ namespace iTextSample.Services
 
             return Task.FromResult(saveFileName);
         }
+
+        /// <summary>
+        /// Sample create table
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_09()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            document.Add(new Paragraph("This is sample table with 3 column and fix width. นี่เป็นตัวอย่างตารางที่กำหนด 3 คอลัมน์และกำหนดความกว้างตายตัว"));
+
+            // Create table from basic 3 column
+            float[] pointColumnWidths = { 150F, 150F, 150F };
+            Table table1 = new Table(pointColumnWidths);
+
+            // Header cells this row will replete every page
+            Cell cell1_1 = new Cell().Add(new Paragraph("Name").SetBold());
+            Cell cell1_2 = new Cell().Add(new Paragraph("Surname").SetBold());
+            Cell cell1_3 = new Cell().Add(new Paragraph("Age").SetBold());
+
+            table1.AddHeaderCell(cell1_1);
+            table1.AddHeaderCell(cell1_2);
+            table1.AddHeaderCell(cell1_3);
+
+            // Data cells row 1
+            Cell cell2_1 = new Cell().Add(new Paragraph("John"));
+            Cell cell2_2 = new Cell().Add(new Paragraph("Freeman"));
+            Cell cell2_3 = new Cell().Add(new Paragraph("23"));
+
+            table1.AddCell(cell2_1);
+            table1.AddCell(cell2_2);
+            table1.AddCell(cell2_3);
+
+            // Data cells row 2
+            Cell cell3_1 = new Cell().Add(new Paragraph("Mata"));
+            Cell cell3_2 = new Cell().Add(new Paragraph("Smith"));
+            Cell cell3_3 = new Cell().Add(new Paragraph("20"));
+
+            table1.AddCell(cell3_1);
+            table1.AddCell(cell3_2);
+            table1.AddCell(cell3_3);
+
+            document.Add(table1);
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
     }
 }

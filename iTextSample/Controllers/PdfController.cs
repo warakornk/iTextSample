@@ -206,5 +206,29 @@ namespace iTextSample.Controllers
 
             return Ok($"please check file name \"{outputfilename}\" output folder");
         }
+
+        /// <summary>
+        /// Sample set image background or watermark
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Sample_17")]
+        public async Task<IActionResult> GetSample17Async()
+        {
+            string outputfilename = await _pdfService.Function_17();
+
+            return Ok($"please check file name \"{outputfilename}\" output folder");
+        }
+
+        /// <summary>
+        /// Sample add image
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Sample_18")]
+        public async Task<IActionResult> GetSample18Async()
+        {
+            string outputfilename = await _pdfService.Function_18();
+
+            return Ok($"please check file name \"{outputfilename}\" output folder");
+        }
     }
 }

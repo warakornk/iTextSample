@@ -100,6 +100,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:iTextSample.Controllers.PdfController.GetSample17Async">
+            <summary>
+            Sample set image background or watermark
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Controllers.PdfController.GetSample18Async">
+            <summary>
+            Sample add image
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:iTextSample.Services.PdfService.Function_01">
             <summary>
             Create sample pdf file and add a paragraph. Then save to output folder.
@@ -191,6 +203,18 @@
         <member name="M:iTextSample.Services.PdfService.Function_16">
             <summary>
             Sample add page number
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Services.PdfService.Function_17">
+            <summary>
+            Sample set image background or watermark
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Services.PdfService.Function_18">
+            <summary>
+            Sample add image
             </summary>
             <returns></returns>
         </member>

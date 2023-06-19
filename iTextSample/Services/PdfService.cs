@@ -711,5 +711,93 @@ namespace iTextSample.Services
 
             return Task.FromResult(saveFileName);
         }
+
+        /// <summary>
+        /// Sample set image background or watermark
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_17()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            document.Add(new Paragraph("This is sample Text at front"));
+
+            // Prepair background Image
+            // The better bacjground shound be .png file
+            // If image is .jpg. you should set Opacity
+            string imagePath = System.IO.Path.Combine(_environment.ContentRootPath, "Assets/Images/Background/wall_01.png");
+            Image bgImage = new Image(ImageDataFactory.Create(imagePath));
+
+            // bgImage.SetWidth(pdf.GetDefaultPageSize().GetWidth());
+            // bgImage.SetHeight(pdf.GetDefaultPageSize().GetHeight());
+            // bgImage.SetOpacity(0.2f);
+            bgImage.SetFixedPosition(0, 0);
+            document.Add(bgImage);
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
+
+        /// <summary>
+        /// Sample add image
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_18()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            document.Add(new Paragraph("This is sample add image. นี่เป้นการเพิ่มรูภาพ"));
+            document.Add(new Paragraph("Image 1 will stay in document paragraph."));
+            // Prepair logo 1
+            string logoPath1 = System.IO.Path.Combine(_environment.ContentRootPath, "Assets/Images/Icons/choco-balls.png");
+            Image logo1 = new Image(ImageDataFactory.Create(logoPath1));
+
+            // set image size
+            logo1.SetWidth(50f);
+            document.Add(logo1);
+
+            document.Add(new Paragraph()
+                        .Add(new Text("This is sample to add image in same paragraph with text"))
+                        .Add(logo1)
+                        .Add(new Text(" and this is text after image"))
+                        );
+
+            // Prepaire logo 2
+            string logoPath2 = System.IO.Path.Combine(_environment.ContentRootPath, "Assets/Images/Icons/lollipop.png");
+            Image logo2 = new Image(ImageDataFactory.Create(logoPath2));
+
+            logo2.SetWidth(80);
+            // Fix position at x:100 point, y:300 point
+            // Start coordinate from bottom left conner. at SetFixedPosition function you can set page number to add image.
+            logo2.SetFixedPosition(100, 300);
+            document.Add(logo2);
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
     }
 }

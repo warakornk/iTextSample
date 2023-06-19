@@ -33,5 +33,9 @@
         public Task<string> Function_15();
 
         public Task<string> Function_16();
+
+        public Task<string> Function_17();
+
+        public Task<string> Function_18();
     }
 }

@@ -1,13 +1,19 @@
-﻿using iText.Kernel.Font;
+﻿using iText.IO.Image;
+using iText.Kernel.Colors;
+using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Draw;
+using iText.Kernel.Pdf.Xobject;
 using iText.Layout;
+using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using iTextSample.Enums;
 using iTextSample.Services.Helper;
 using iTextSample.Services.Interface;
+using Microsoft.AspNetCore.Hosting;
+using System.Drawing;
 
 namespace iTextSample.Services
 {
@@ -178,6 +184,10 @@ namespace iTextSample.Services
             return Task.FromResult(saveFileName);
         }
 
+        /// <summary>
+        /// Sample text leading (space between line)
+        /// </summary>
+        /// <returns></returns>
         public Task<string> Function_06()
         {
             string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
@@ -191,7 +201,7 @@ namespace iTextSample.Services
 
             document.SetFont(thaiFont);
 
-            //
+            // Text leading
             string sampleText = "This is sample text to set Leading. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
             float fixLeadingValue = 30;
             float fixLeadingValue2 = 10;
@@ -214,7 +224,7 @@ namespace iTextSample.Services
         }
 
         /// <summary>
-        ///  Sample create pdf with list
+        /// Sample create pdf with list
         /// </summary>
         /// <returns></returns>
         public Task<string> Function_07()
@@ -378,6 +388,323 @@ namespace iTextSample.Services
             table1.AddCell(cell3_3);
 
             document.Add(table1);
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
+
+        /// <summary>
+        /// Sample table cell background color
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_10()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            document.Add(new Paragraph("This is sample table with set back gound color from iText color and custom color. นี่เป็นตัวอย่างตารางที่มีการกำหนดสีพื้นหลัง จากสีของ iText และสีที่กำหนดเอง"));
+
+            // Prepair custom color
+            iText.Kernel.Colors.Color tableBgColor = new DeviceRgb(230, 230, 230);
+
+            // Create table from basic 3 column
+            float[] pointColumnWidths = { 150F, 150F, 150F };
+            Table table1 = new Table(pointColumnWidths);
+
+            // Header cells with iText Background Color
+            Cell cell1_1 = new Cell().Add(new Paragraph("Name").SetBold()).SetBackgroundColor(ColorConstants.RED);
+            Cell cell1_2 = new Cell().Add(new Paragraph("Surname").SetBold()).SetBackgroundColor(ColorConstants.BLUE);
+            Cell cell1_3 = new Cell().Add(new Paragraph("Age").SetBold()).SetBackgroundColor(ColorConstants.CYAN);
+
+            table1.AddHeaderCell(cell1_1);
+            table1.AddHeaderCell(cell1_2);
+            table1.AddHeaderCell(cell1_3);
+
+            // Row 1 with custom color
+            Cell cell2_1 = new Cell().Add(new Paragraph("John")).SetBackgroundColor(tableBgColor);
+            Cell cell2_2 = new Cell().Add(new Paragraph("Freeman")).SetBackgroundColor(tableBgColor);
+            Cell cell2_3 = new Cell().Add(new Paragraph("23")).SetBackgroundColor(tableBgColor);
+
+            table1.AddCell(cell2_1);
+            table1.AddCell(cell2_2);
+            table1.AddCell(cell2_3);
+
+            // Row 2
+            Cell cell3_1 = new Cell().Add(new Paragraph("Mata"));
+            Cell cell3_2 = new Cell().Add(new Paragraph("Smith"));
+            Cell cell3_3 = new Cell().Add(new Paragraph("20"));
+
+            table1.AddCell(cell3_1);
+            table1.AddCell(cell3_2);
+            table1.AddCell(cell3_3);
+
+            document.Add(table1);
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
+
+        /// <summary>
+        /// Sample table border
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_11()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            document.Add(new Paragraph("This is sample table border set on cell. ตัวอย่างเส้นขอบตารางกำหนดที่แต่ละช่อง"));
+
+            // Prepair border
+            Border borderDashedRed = new DashedBorder(ColorConstants.RED, 4f);
+            Border borderSolidGreen = new SolidBorder(ColorConstants.GREEN, 1f);
+
+            // Create table from basic 3 column
+            float[] pointColumnWidths = { 150F, 150F, 150F };
+            Table table1 = new Table(pointColumnWidths);
+
+            // Header with no border
+            Cell cell1_1 = new Cell().Add(new Paragraph("Name").SetBold()).SetBorder(Border.NO_BORDER);
+            Cell cell1_2 = new Cell().Add(new Paragraph("Surname").SetBold()).SetBorder(Border.NO_BORDER);
+            Cell cell1_3 = new Cell().Add(new Paragraph("Age").SetBold()).SetBorder(Border.NO_BORDER);
+
+            table1.AddHeaderCell(cell1_1);
+            table1.AddHeaderCell(cell1_2);
+            table1.AddHeaderCell(cell1_3);
+
+            // Data cells row 1 with dash border and width 4f
+            Cell cell2_1 = new Cell().Add(new Paragraph("John")).SetBorder(borderDashedRed);
+            Cell cell2_2 = new Cell().Add(new Paragraph("Freeman")).SetBorder(borderDashedRed);
+            Cell cell2_3 = new Cell().Add(new Paragraph("23")).SetBorder(borderDashedRed);
+
+            table1.AddCell(cell2_1);
+            table1.AddCell(cell2_2);
+            table1.AddCell(cell2_3);
+
+            // Data cells row 2
+            Cell cell3_1 = new Cell().Add(new Paragraph("Mata")).SetBorder(borderSolidGreen);
+            Cell cell3_2 = new Cell().Add(new Paragraph("Smith")).SetBorder(borderSolidGreen);
+            Cell cell3_3 = new Cell().Add(new Paragraph("20")).SetBorder(borderSolidGreen);
+
+            table1.AddCell(cell3_1);
+            table1.AddCell(cell3_2);
+            table1.AddCell(cell3_3);
+
+            document.Add(table1);
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
+
+        /// <summary>
+        /// Sample Separate line
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_12()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            document.Add(new Paragraph("This is sample separate line. ตัวอย่างเส้นแบ่ง"));
+
+            // Prepair separate line
+            SolidLine solidLine = new SolidLine(2f);
+            DashedLine dashedLine = new DashedLine(1f);
+            SolidLine solidLine1 = new SolidLine();
+
+            solidLine.SetColor(ColorConstants.RED);
+            dashedLine.SetColor(ColorConstants.GREEN);
+            solidLine1.SetColor(ColorConstants.BLUE);
+
+            LineSeparator lineSeparator1 = new LineSeparator(solidLine);
+            LineSeparator lineSeparator2 = new LineSeparator(dashedLine);
+            LineSeparator lineSeparator3 = new LineSeparator(solidLine1);
+
+            // set separator width to 100 point
+            lineSeparator1.SetWidth(100);
+
+            document.Add(new Paragraph("This is solid line"));
+            document.Add(lineSeparator1);
+            document.Add(new Paragraph("This is dashed line"));
+            document.Add(lineSeparator2);
+            document.Add(new Paragraph("This is solid line with set color only"));
+            document.Add(lineSeparator3);
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
+
+        /// <summary>
+        /// Sample Font color
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_13()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            document.Add(new Paragraph("This is sample font color. นี่เป็นตัวอย่างการกำหนดสีให้กับข้อความ"));
+            // --------------------------------------------------------------------------------------------
+            string sampleText = "This is sample text to set justified alignment. You can use a lot of sample text to view this justified. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. และส่วนนี้เป็นการจัดชิดขอบซ้ายขวาในข้อความภาษาไทย ธุหร่ำโมเดลวาไรตี้สัมนา แพนงเชิญฮัลโลวีนซัพพลายแอร์แจ๊กพอต โฟล์ค สป็อตโปรเจกเตอร์ธุหร่ำขั้นตอนเอสเพรสโซ วีซ่า ไฮไลท์คาร์วัจนะมั้ง เปียโนเซ็กซี่โปรเจ็กเตอร์โลชั่น ป่าไม้ยูโรแจ๊กพอตพลาซ่า เรตอุด้ง เกรย์แมชชีนบาลานซ์ไบโออึ๋ม ออสซี่ควิกโปรเจ็คเซ็กส์หลวงพี่ สะเด่าสังโฆ เจลแม่ค้า สปาอพาร์ตเมนต์โปสเตอร์แดนซ์ แตงโมนินจาแอร์ธัมโมเพลย์บอย สแตนเลสบร็อคโคลีแทงโก้จึ๊กเบอร์เกอร์\r\nเพรียวบางไฮเทค สตรอเบอรี ต่อยอด เอเซียไฮเอนด์ รุมบ้าแคปเทรลเลอร์น้องใหม่รีสอร์ต มิลค์ออสซี่ไอเดียเซ็กส์มาราธอน ศิลปวัฒนธรรม ฮองเฮาโปรดักชั่นเอ็กซ์โปสแตนเลส พอเพียงเทียมทานคอนเซปต์ ออดิชั่นตัวเอง ออสซี่ มายาคติแชมเปญรีพอร์ทรีโมตซูชิ แทกติคแลนด์โหงวเฮ้ง ตัวเองเยลลี่ มินท์เดชานุภาพ ยากูซ่า\r\nสเกตช์เวิร์กช็อปเลกเชอร์แอดมิชชั่น ซานตาคลอสพาสตาเช็งเม้งละตินบึม คอนแท็คม้านั่งแตงโมหมวยซีอีโอ ราเมนออยล์เพียบแปร้เวิร์กช็อป มอนสเตอร์ลอจิสติกส์โปรแรลลี่ บอร์ดทีวีตังค์ วาซาบิแต๋วแคทวอล์คอันตรกิริยาสเปค บูติกบาร์บีคิวเบลอเบิร์นสหัสวรรษ โก๊ะเวณิกาลาตินคอมพ์ โครนาบู๊แฟรนไชส์ว้าวฟรุต จิ๊กโก๋ปิโตรเคมี ปิยมิตรล็อบบี้แมกกาซีน เช็งเม้งช็อป สตรอว์เบอร์รี ถูกต้องสเตชัน มาร์ชอวอร์ดซัพพลายเก๋ากี้\r\nฮาโลวีนเลคเชอร์เมเปิลเมาท์ ยูวีก่อนหน้าสตีลวาทกรรม แพตเทิร์นม็อบ แบดวโรกาสแม็กกาซีนบัสลิมิต ไวกิ้งซูเปอร์โดมิโนแอ็กชั่น เที่ยงวันเรซิ่นวอลล์พันธุวิศวกรรม แชมเปญมอยส์เจอไรเซอร์เวณิกา คาร์สันทนาการ ซาตานโลโก้รากหญ้าเซอร์วิสเจ็ต อัลบัมพอเพียงเฟรชมาร์กปอดแหก แต๋วอันเดอร์ฮัมไบโอ พริตตี้นู้ด เจ๊ อาข่าไอเดียไทม์จอหงวน บูติคเคอร์ฟิว อึ้มลอร์ดบอดี้สะบึม\r\nมิวสิคฟยอร์ดแตงโมแฟ็กซ์ คอนโดมิเนียมนพมาศฟินิกซ์ศากยบุตร เวเฟอร์ไกด์ มาร์ชผลไม้ วิลล์พุทธศตวรรษบาลานซ์ จีดีพีอาข่า มายองเนสสารขัณฑ์ ภควัมบดีโพลารอยด์ยะเยือกโซน พาร์แอปพริคอทอาร์ติสต์เวิร์คเพนตากอน แกสโซฮอล์ฮัมเจ็ต ซัมเมอร์ ยาวีจึ๊กอิเลียดมาม่า พรีเซ็นเตอร์ โรแมนติค จังโก้หลวงพี่ หมวยฟลุทเปโซ\r\n";
+
+            // Prepair  custom color
+            iText.Kernel.Colors.Color fontColor = new DeviceRgb(50, 150, 200);
+            iText.Kernel.Colors.Color fontColor1 = new DeviceRgb(20, 10, 150);
+
+            // set color all paragraph by iText color
+            // font color set at paragraph
+            document.Add(new Paragraph(sampleText).SetFontColor(ColorConstants.BLUE));
+            document.Add(new Paragraph("------------------------------------------------------------------"));
+            // Set color all paragraph by custom color
+            document.Add(new Paragraph(sampleText).SetFontColor(fontColor));
+            document.Add(new Paragraph("------------------------------------------------------------------"));
+            // set many color in one paragraph by setpatrate to each text
+            document.Add(new Paragraph()
+                    .Add(new Text("This is text 1 with color 1. ").SetFontColor(fontColor))
+                    .Add(new Text("This is text 2 with color 2.").SetFontColor(fontColor1))
+                );
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
+
+        /// <summary>
+        /// Sample page size
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_14()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+
+            pdf.SetDefaultPageSize(PageSize.A9);            // Set Page size on this line
+
+            Document document = new Document(pdf);
+            // Or
+            //Document document = new Document(pdf, PageSize.A9);
+
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            // Sample Text
+            document.Add(new Paragraph("Page size set at code at Pdfdocument. กำหนดขนาดหน้ากระดาษที่ Pdfdocument"));
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
+
+        /// <summary>
+        /// Sample page size (A4) and rotate
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_15()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+
+            pdf.SetDefaultPageSize(PageSize.A4.Rotate());            // Set Page size A4 and rotate
+
+            Document document = new Document(pdf);
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            // Sample Text
+            document.Add(new Paragraph("Page size set at code at Pdfdocument. กำหนดขนาดหน้ากระดาษที่ Pdfdocument"));
+
+            // -----------------------------------------------------
+            document.Close();
+
+            return Task.FromResult(saveFileName);
+        }
+
+        /// <summary>
+        /// Sample add page number
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_16()
+        {
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+            string saveFileName = $"{System.IO.Path.GetRandomFileName().Replace(".", "")}.pdf";
+            string dest = System.IO.Path.Combine(destinationPath, saveFileName);
+
+            PdfWriter writer = new PdfWriter(dest);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf, PageSize.A4, false);      // This line must set immediateFlush to false
+
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+
+            document.SetFont(thaiFont);
+
+            document.Add(new Paragraph("This is text in start page"));
+            // Sample text for 10 page we should start conting from 10
+            for (int i = 1; i <= 5; i++)
+            {
+                document.Add(new Paragraph($"This is sample text on Page {i}"));
+                document.Add(new AreaBreak());  // This is page break
+            }
+            document.Add(new Paragraph("This is text in last page after page break"));
+
+            // Add page number each page at position x:570, y: 790
+            // you must set immediateFlush to false when create Document to prevent error when use ShowTextAligned
+            int pageCount = pdf.GetNumberOfPages();
+            for (int i = 1; i <= pageCount; i++)
+            {
+                document.ShowTextAligned(new Paragraph($"page {i} of {pageCount}"), 570, 790, i, TextAlignment.RIGHT, VerticalAlignment.TOP, 0);
+            }
 
             // -----------------------------------------------------
             document.Close();

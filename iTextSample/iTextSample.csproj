@@ -4,7 +4,15 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Assets\Images\Backgound\**" />
+    <Content Remove="Assets\Images\Backgound\**" />
+    <EmbeddedResource Remove="Assets\Images\Backgound\**" />
+    <None Remove="Assets\Images\Backgound\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="itext7" Version="8.0.0" />
@@ -13,8 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Images\Backgound\" />
-    <Folder Include="Inputs\" />
+    <Folder Include="Input\" />
     <Folder Include="Models\" />
     <Folder Include="Output\" />
   </ItemGroup>

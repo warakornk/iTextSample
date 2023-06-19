@@ -94,3 +94,5 @@ C:\Users\warakorn.kid\Documents\GitHub\iTextSample\iTextSample\obj\Debug\net6.0\
 C:\Users\warakorn.kid\Documents\GitHub\iTextSample\iTextSample\obj\Debug\net6.0\iTextSample.csproj.CopyComplete
 C:\Users\warakorn.kid\Documents\GitHub\iTextSample\iTextSample\obj\Debug\net6.0\iTextSample.genruntimeconfig.cache
 C:\Users\warakorn.kid\Documents\GitHub\iTextSample\iTextSample\obj\Debug\net6.0\ref\iTextSample.dll
+C:\Users\warakorn.kid\Documents\GitHub\iTextSample\iTextSample\bin\Debug\net6.0\iTextSample.xml
+C:\Users\warakorn.kid\Documents\GitHub\iTextSample\iTextSample\obj\Debug\net6.0\iTextSample.xml

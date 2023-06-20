@@ -915,5 +915,30 @@ namespace iTextSample.Services
 
             return Task.FromResult("filled_form.pdf");
         }
+
+        /// <summary>
+        /// Export pdf for download
+        /// </summary>
+        /// <returns></returns>
+        public Task<MemoryStream> Function_22()
+        {
+            MemoryStream stream = new MemoryStream();
+            PdfWriter pdfWriter = new PdfWriter(stream);
+
+            pdfWriter.SetCloseStream(false);        // must use when export MemoryStream
+
+            PdfDocument pdf = new PdfDocument(pdfWriter);
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+            Document document = new Document(pdf);
+            document.SetFont(thaiFont);
+
+            document.Add(new Paragraph("This is sample text for create pdf"));
+
+            // Close document and return
+            document.Close();
+
+            // response stream content
+            return Task.FromResult(stream);
+        }
     }
 }

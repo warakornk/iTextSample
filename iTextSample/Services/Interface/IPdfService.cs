@@ -43,5 +43,7 @@
         public Task<string> Function_20();
 
         public Task<string> Function_21();
+
+        public Task<MemoryStream> Function_22();
     }
 }

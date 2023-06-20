@@ -266,5 +266,30 @@ namespace iTextSample.Controllers
 
             return Ok($"please check file name \"{outputfilename}\" output folder");
         }
+
+        /// <summary>
+        /// Export pdf for download
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Sample_22")]
+        public async Task<IActionResult> GetSample22Async()
+        {
+            try
+            {
+                // random filename to save
+                string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+                MemoryStream stream = new MemoryStream();
+
+                stream = await _pdfService.Function_22();
+                stream.Position = 0;
+
+                return File(stream.GetBuffer(), "application/pdf", $"sampleOutput-{fileName}.pdf");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return NoContent();
+            }
+        }
     }
 }

@@ -130,6 +130,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:iTextSample.Controllers.PdfController.GetSample22Async">
+            <summary>
+            Export pdf for download
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:iTextSample.Services.PdfService.Function_01">
             <summary>
             Create sample pdf file and add a paragraph. Then save to output folder.
@@ -251,6 +257,12 @@
         <member name="M:iTextSample.Services.PdfService.Function_21">
             <summary>
             Fill Pdf form
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Services.PdfService.Function_22">
+            <summary>
+            Export pdf for download
             </summary>
             <returns></returns>
         </member>

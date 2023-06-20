@@ -1,10 +1,12 @@
-﻿using iText.IO.Image;
+﻿using iText.Forms;
+using iText.IO.Image;
 using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Kernel.Pdf.Xobject;
+using iText.Kernel.Utils;
 using iText.Layout;
 using iText.Layout.Borders;
 using iText.Layout.Element;
@@ -13,6 +15,7 @@ using iTextSample.Enums;
 using iTextSample.Services.Helper;
 using iTextSample.Services.Interface;
 using Microsoft.AspNetCore.Hosting;
+
 using System.Drawing;
 
 namespace iTextSample.Services
@@ -798,6 +801,119 @@ namespace iTextSample.Services
             document.Close();
 
             return Task.FromResult(saveFileName);
+        }
+
+        // start spliter ---------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Split Pdf file
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_19()
+        {
+            string sourceFile = System.IO.Path.Combine(_environment.ContentRootPath, "Input/separate.pdf");
+            string destinationPath = System.IO.Path.Combine(_environment.ContentRootPath, "Output");
+
+            // Call split function
+            ManipulatePdf(sourceFile, destinationPath);
+            return Task.FromResult("check folder output");
+        }
+
+        private void ManipulatePdf(string sourceFilePath, string destinationPath)
+        {
+            // Read source file
+            PdfDocument pdfDocument = new PdfDocument(new PdfReader(sourceFilePath));
+            // How to split
+            //IList<PdfDocument> splitDocuments = new CustomPdfSplitter(pdfDocument, destinationFilePath).SplitBySize(200000);
+            //IList<PdfDocument> splitDocuments = new CustomPdfSplitter(pdfDocument, destinationFilePath).SplitByPageCount(1);
+
+            // This command split at page number (list of page number to split)
+            IList<PdfDocument> splitDocuments = new CustomPdfSplitter(pdfDocument, destinationPath).SplitByPageNumbers(new List<int>() { 2 });
+
+            foreach (PdfDocument doc in splitDocuments)
+            {
+                doc.Close();
+            }
+
+            pdfDocument.Close();
+        }
+
+        private class CustomPdfSplitter : PdfSplitter
+        {
+            private string _destinationFilePath;
+            private int partNumber = 1;
+
+            public CustomPdfSplitter(PdfDocument pdfDocument, String dest) : base(pdfDocument)
+            {
+                this._destinationFilePath = dest;
+            }
+
+            protected override PdfWriter GetNextPdfWriter(PageRange documentPageRange)
+            {
+                string saveFilePath = System.IO.Path.Combine(_destinationFilePath, $"splt_{partNumber}.pdf");
+
+                partNumber = partNumber + 1;
+                return new PdfWriter(saveFilePath);
+            }
+        }
+
+        // end spliter ---------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Merge pdf files
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_20()
+        {
+            string sourceFile1 = System.IO.Path.Combine(_environment.ContentRootPath, "Input/file_1.pdf");
+            string sourceFile2 = System.IO.Path.Combine(_environment.ContentRootPath, "Input/file_2.pdf");
+            string destinationFile = System.IO.Path.Combine(_environment.ContentRootPath, "Output/mergefile.pdf");
+
+            // Read file 1 and save as target then read file 2 and merge to target
+            PdfDocument pdfDocument = new PdfDocument(new PdfReader(sourceFile1), new PdfWriter(destinationFile));
+            PdfDocument pdfDocument2 = new PdfDocument(new PdfReader(sourceFile2));
+
+            // Merge file
+            PdfMerger merger = new PdfMerger(pdfDocument);
+
+            merger.Merge(pdfDocument2, 1, pdfDocument2.GetNumberOfPages());
+
+            pdfDocument2.Close();
+            pdfDocument.Close();
+
+            return Task.FromResult("mergefile.pdf");
+        }
+
+        /// <summary>
+        /// Fill Pdf form
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> Function_21()
+        {
+            // You can create pdf form by create on word then save to pdf file
+            // You must have adobe license and acrobat to set pdf form
+            // Every input you can use input name with space.
+            // When you get value from input, you can use GetField like code below
+
+            string sourceFile = System.IO.Path.Combine(_environment.ContentRootPath, "Input/form_file.pdf");
+            string destinationFile = System.IO.Path.Combine(_environment.ContentRootPath, "Output/filled_form.pdf");
+
+            PdfDocument pdfDocument = new PdfDocument(new PdfReader(sourceFile), new PdfWriter(destinationFile));
+            PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfDocument, true);
+            PdfFont thaiFont = _localFont.GetFont(RefLocalFont.THSarabun);
+            float fontSize = 14f;
+
+            form.SetGenerateAppearance(true);
+
+            form.GetField("ID").SetValue("ID123456", thaiFont, fontSize);
+            form.GetField("Name").SetValue("สมศรี มีเงืน", thaiFont, fontSize);
+            form.GetField("Form Value 3").SetValue("\u04e7 สวัสดี", thaiFont, fontSize);
+            form.GetField("Form Value 4").SetValue("1.0", "100%");
+            form.GetField("Val 51").SetValue("true");
+            form.GetField("Val 52").SetValue("1");
+
+            pdfDocument.Close();
+
+            return Task.FromResult("filled_form.pdf");
         }
     }
 }

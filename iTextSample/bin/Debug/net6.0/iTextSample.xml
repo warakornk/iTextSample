@@ -112,6 +112,24 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:iTextSample.Controllers.PdfController.GetSample19Async">
+            <summary>
+            Split Pdf file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Controllers.PdfController.GetSample20Async">
+            <summary>
+            Merge pdf files
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Controllers.PdfController.GetSample21Async">
+            <summary>
+            Fill pdf form
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:iTextSample.Services.PdfService.Function_01">
             <summary>
             Create sample pdf file and add a paragraph. Then save to output folder.
@@ -215,6 +233,24 @@
         <member name="M:iTextSample.Services.PdfService.Function_18">
             <summary>
             Sample add image
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Services.PdfService.Function_19">
+            <summary>
+            Split Pdf file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Services.PdfService.Function_20">
+            <summary>
+            Merge pdf files
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Services.PdfService.Function_21">
+            <summary>
+            Fill Pdf form
             </summary>
             <returns></returns>
         </member>

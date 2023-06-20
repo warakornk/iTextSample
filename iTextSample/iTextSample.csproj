@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Input\" />
     <Folder Include="Models\" />
     <Folder Include="Output\" />
   </ItemGroup>

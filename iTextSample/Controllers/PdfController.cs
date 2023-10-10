@@ -64,7 +64,7 @@ namespace iTextSample.Controllers
 		}
 
 		/// <summary>
-		/// Create sample pdf with Indent
+		/// Create sample pdf with indent
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet("Sample_05")]
@@ -268,7 +268,7 @@ namespace iTextSample.Controllers
 		}
 
 		/// <summary>
-		/// Export pdf for download
+		/// Export pdf for download (MemoryStream)
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet("Sample_22")]

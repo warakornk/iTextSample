@@ -162,7 +162,7 @@ namespace iTextSample.Services
 		}
 
 		/// <summary>
-		/// Create sample pdf with Indent
+		/// Create sample pdf with indent
 		/// </summary>
 		/// <returns></returns>
 		public Task<string> Function_05()
@@ -984,7 +984,7 @@ namespace iTextSample.Services
 		}
 
 		/// <summary>
-		/// Add wartermark from text
+		/// Add watermark from text
 		/// </summary>
 		/// <returns></returns>
 		public Task<MemoryStream> Function_24()
@@ -1054,6 +1054,7 @@ namespace iTextSample.Services
 				var pageSize = page.GetPageSize();
 
 				Canvas canvasModel;
+
 				canvas.BeginLayer(layer);
 				canvasModel = new Canvas(canvas, ps);
 				canvasModel.Add(watermarkImage);

@@ -316,5 +316,55 @@ namespace iTextSample.Controllers
 				return NoContent();
 			}
 		}
+
+		/// <summary>
+		/// Add watermark from text
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet("Sample_24")]
+		public async Task<IActionResult> GetSample24Async()
+		{
+			try
+			{
+				// random filename to save
+				string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+				MemoryStream stream = new MemoryStream();
+
+				stream = await _pdfService.Function_24();
+				stream.Position = 0;
+
+				return File(stream.GetBuffer(), "application/pdf", $"sampleOutput-{fileName}.pdf");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+				return NoContent();
+			}
+		}
+
+		/// <summary>
+		/// Add watermark from iamge
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet("Sample_25")]
+		public async Task<IActionResult> GetSample25Async()
+		{
+			try
+			{
+				// random filename to save
+				string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+				MemoryStream stream = new MemoryStream();
+
+				stream = await _pdfService.Function_25();
+				stream.Position = 0;
+
+				return File(stream.GetBuffer(), "application/pdf", $"sampleOutput-{fileName}.pdf");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+				return NoContent();
+			}
+		}
 	}
 }

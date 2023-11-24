@@ -30,7 +30,7 @@
         </member>
         <member name="M:iTextSample.Controllers.PdfController.GetSample05Async">
             <summary>
-            Create sample pdf with Indent
+            Create sample pdf with indent
             </summary>
             <returns></returns>
         </member>
@@ -132,7 +132,7 @@
         </member>
         <member name="M:iTextSample.Controllers.PdfController.GetSample22Async">
             <summary>
-            Export pdf for download
+            Export pdf for download (MemoryStream)
             </summary>
             <returns></returns>
         </member>
@@ -151,6 +151,12 @@
         <member name="M:iTextSample.Controllers.PdfController.GetSample25Async">
             <summary>
             Add watermark from iamge
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Controllers.PdfController.GetSample28Async">
+            <summary>
+            Table boder style (outer, inner, full)
             </summary>
             <returns></returns>
         </member>
@@ -178,7 +184,7 @@
         </member>
         <member name="M:iTextSample.Services.PdfService.Function_05">
             <summary>
-            Create sample pdf with Indent
+            Create sample pdf with indent
             </summary>
             <returns></returns>
         </member>
@@ -292,13 +298,19 @@
         </member>
         <member name="M:iTextSample.Services.PdfService.Function_24">
             <summary>
-            Add wartermark from text
+            Add watermark from text
             </summary>
             <returns></returns>
         </member>
         <member name="M:iTextSample.Services.PdfService.Function_25">
             <summary>
             Add watermark from image
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Services.PdfService.Function_28">
+            <summary>
+            Table boder style (outer, inner, full)
             </summary>
             <returns></returns>
         </member>

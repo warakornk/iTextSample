@@ -51,5 +51,7 @@
 		public Task<MemoryStream> Function_24();
 
 		public Task<MemoryStream> Function_25();
+
+		public Task<MemoryStream> Function_28();
 	}
 }

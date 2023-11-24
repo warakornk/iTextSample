@@ -27,11 +27,13 @@ namespace iTextSample.Services
 	{
 		private readonly IWebHostEnvironment _environment;
 		private readonly ILocalFont _localFont;
+		private readonly IHelper _helper;
 
-		public PdfService(IWebHostEnvironment environment, ILocalFont localFont)
+		public PdfService(IWebHostEnvironment environment, ILocalFont localFont, IHelper helper)
 		{
 			_environment = environment;
 			_localFont = localFont;
+			_helper = helper;
 		}
 
 		/// <summary>
@@ -1063,6 +1065,84 @@ namespace iTextSample.Services
 
 			document.Close();
 			return Task.FromResult(stream);
+		}
+
+		/// <summary>
+		/// Table border style (outer, inner, all)
+		/// </summary>
+		/// <returns></returns>
+		public async Task<MemoryStream> Function_28()
+		{
+			MemoryStream stream = new MemoryStream();
+			PdfWriter writer = new PdfWriter(stream);
+			PdfDocument pdf = new PdfDocument(writer);
+			Document document = new Document(pdf, PageSize.A4, false);
+
+			writer.SetCloseStream(false);
+
+			// Prepair border style
+			Border border = new SolidBorder(ColorConstants.GREEN, 0.8f);
+
+			Table table1 = new Table(UnitValue.CreatePercentArray(4)).UseAllAvailableWidth();
+
+			// Add cell to table by loops
+			for (int i = 0; i < 6; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					table1.AddCell(new Cell().Add(new Paragraph($"Table 1 Cell {i}, {j}")));
+				}
+			}
+			// add normal table to document
+			document.Add(new Paragraph("This is sample of table normal border style."));
+			document.Add(table1);
+
+			// Set all border style
+			Table table2 = new Table(UnitValue.CreatePercentArray(4)).UseAllAvailableWidth();
+
+			// Add cell to table by loops
+			for (int i = 0; i < 6; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					table2.AddCell(new Cell().Add(new Paragraph($"Table 2 Cell {i}, {j}")));
+				}
+			}
+			table2 = await _helper.SetTableAllBorder(table2, border, true);
+			document.Add(new Paragraph("This is sample of table all border style."));
+			document.Add(table2);
+
+			// Set outer border style
+
+			Table table3 = new Table(UnitValue.CreatePercentArray(4)).UseAllAvailableWidth();
+			// Add cell to table by loops
+			for (int i = 0; i < 6; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					table3.AddCell(new Cell().Add(new Paragraph($"Table 3 Cell {i}, {j}")));
+				}
+			}
+			table3 = await _helper.SetTableOuterBorder(table3, border, true);
+			document.Add(new Paragraph("This is sample of table outer border style."));
+			document.Add(table3);
+
+			// Set inner border style
+			Table table4 = new Table(UnitValue.CreatePercentArray(4)).UseAllAvailableWidth();
+			// Add cell to table by loops
+			for (int i = 0; i < 6; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					table4.AddCell(new Cell().Add(new Paragraph($"Table 4 Cell {i}, {j}")));
+				}
+			}
+			table4 = await _helper.SetTableInnerBorder(table4, border, true);
+			document.Add(element: new Paragraph("This is sample of table inner border style."));
+			document.Add(table4);
+
+			document.Close();
+			return await Task.FromResult(stream);
 		}
 	}
 }

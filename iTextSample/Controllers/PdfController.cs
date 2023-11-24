@@ -1,6 +1,7 @@
-﻿using iTextSample.Services.Interface;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using iTextSample.Services.Interface;
+using Org.BouncyCastle.Asn1.Mozilla;
 
 namespace iTextSample.Controllers
 {
@@ -283,7 +284,7 @@ namespace iTextSample.Controllers
 				stream = await _pdfService.Function_22();
 				stream.Position = 0;
 
-				return File(stream.GetBuffer(), "application/pdf", $"sampleOutput-{fileName}.pdf");
+				return File(stream, "application/pdf", $"sampleOutput-{fileName}.pdf");
 			}
 			catch (Exception ex)
 			{
@@ -308,7 +309,7 @@ namespace iTextSample.Controllers
 				stream = await _pdfService.Function_23();
 				stream.Position = 0;
 
-				return File(stream.GetBuffer(), "application/pdf", $"sampleOutput-{fileName}.pdf");
+				return File(stream, "application/pdf", $"sampleOutput-{fileName}.pdf");
 			}
 			catch (Exception ex)
 			{
@@ -333,7 +334,7 @@ namespace iTextSample.Controllers
 				stream = await _pdfService.Function_24();
 				stream.Position = 0;
 
-				return File(stream.GetBuffer(), "application/pdf", $"sampleOutput-{fileName}.pdf");
+				return File(stream, "application/pdf", $"sampleOutput-{fileName}.pdf");
 			}
 			catch (Exception ex)
 			{
@@ -358,7 +359,32 @@ namespace iTextSample.Controllers
 				stream = await _pdfService.Function_25();
 				stream.Position = 0;
 
-				return File(stream.GetBuffer(), "application/pdf", $"sampleOutput-{fileName}.pdf");
+				return File(stream, "application/pdf", $"sampleOutput-{fileName}.pdf");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+				return NoContent();
+			}
+		}
+
+		/// <summary>
+		/// Table border style (outer, inner, all)
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet("Sample_28")]
+		public async Task<IActionResult> GetSample28Async()
+		{
+			try
+			{
+				// random filename to save
+				string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+				MemoryStream stream = new MemoryStream();
+
+				stream = await _pdfService.Function_28();
+				stream.Position = 0;
+
+				return File(stream, "application/pdf", $"sampleOutput-{fileName}.pdf");
 			}
 			catch (Exception ex)
 			{

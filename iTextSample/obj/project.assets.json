@@ -5128,11 +5128,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\warakorn.kid\\Documents\\GitHub\\iTextSample\\iTextSample\\iTextSample.csproj",
+      "projectUniqueName": "C:\\GitHub\\iTextSample\\iTextSample\\iTextSample.csproj",
       "projectName": "iTextSample",
-      "projectPath": "C:\\Users\\warakorn.kid\\Documents\\GitHub\\iTextSample\\iTextSample\\iTextSample.csproj",
+      "projectPath": "C:\\GitHub\\iTextSample\\iTextSample\\iTextSample.csproj",
       "packagesPath": "C:\\Users\\warakorn.kid\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\warakorn.kid\\Documents\\GitHub\\iTextSample\\iTextSample\\obj\\",
+      "outputPath": "C:\\GitHub\\iTextSample\\iTextSample\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
@@ -5201,7 +5201,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

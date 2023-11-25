@@ -1,4 +1,6 @@
-﻿namespace iTextSample.Services.Interface
+﻿using iTextSample.Models;
+
+namespace iTextSample.Services.Interface
 {
 	public interface IPdfService
 	{
@@ -51,6 +53,10 @@
 		public Task<MemoryStream> Function_24();
 
 		public Task<MemoryStream> Function_25();
+
+		public Task<List<SimpleSignatureInfomation>> Function_26(string filePath);
+
+		public Task<List<SimpleSignatureInfomation2>> Function_27(string filePath);
 
 		public Task<MemoryStream> Function_28();
 	}

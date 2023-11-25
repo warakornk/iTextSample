@@ -154,11 +154,52 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:iTextSample.Controllers.PdfController.GetSmaple26Async(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Get digital signature information 1
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Controllers.PdfController.GetSample27Async(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Get digital signature information 2
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
         <member name="M:iTextSample.Controllers.PdfController.GetSample28Async">
             <summary>
-            Table boder style (outer, inner, full)
+            Table border style (outer, inner, all)
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:iTextSample.Services.Helper.Helper.SetTableInnerBorder(iText.Layout.Element.Table,iText.Layout.Borders.Border,System.Boolean)">
+            <summary>
+            Set table inner border
+            </summary>
+            <param name="table">iText table</param>
+            <param name="border">Border style</param>
+            <param name="ClearBorder">Clear table border before add inner border</param>
+            <returns>iText table with border</returns>
+        </member>
+        <member name="M:iTextSample.Services.Helper.Helper.SetTableOuterBorder(iText.Layout.Element.Table,iText.Layout.Borders.Border,System.Boolean)">
+            <summary>
+            Set table outer border
+            </summary>
+            <param name="table">iText table</param>
+            <param name="border">Border style</param>
+            <param name="ClearBorder">Clear table border before add inner border</param>
+            <returns>iText table with border</returns>
+        </member>
+        <member name="M:iTextSample.Services.Helper.Helper.SetTableAllBorder(iText.Layout.Element.Table,iText.Layout.Borders.Border,System.Boolean)">
+            <summary>
+            Set table all border
+            </summary>
+            <param name="table">iText table</param>
+            <param name="border">Border style</param>
+            <param name="ClearBorder">Clear table border before add inner border</param>
+            <returns>iText table with border</returns>
         </member>
         <member name="M:iTextSample.Services.PdfService.Function_01">
             <summary>
@@ -308,9 +349,23 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:iTextSample.Services.PdfService.Function_26(System.String)">
+            <summary>
+            Get digital signature information 1
+            </summary>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:iTextSample.Services.PdfService.Function_27(System.String)">
+            <summary>
+            Get digital signature information 2
+            </summary>
+            <param name="filePath"></param>
+            <returns></returns>
+        </member>
         <member name="M:iTextSample.Services.PdfService.Function_28">
             <summary>
-            Table boder style (outer, inner, full)
+            Table border style (outer, inner, all)
             </summary>
             <returns></returns>
         </member>

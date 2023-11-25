@@ -31,6 +31,6 @@ This project use for learning iText technology. Each function will do one thing 
 | Function_23   | Set round conner table                                       |
 | Function_24   | Add watermark from text                                      |
 | Function_25   | Add watermark from image                                     |
-| Function_26   | (On develop)                                                 |
-| Function_27   | (On develop)                                                 |
+| Function_26   | Get digital signature information 1                          |
+| Function_27   | Get digital signature information 2                          |
 | Function_28   | Table border style (outer, inner, all)                       |

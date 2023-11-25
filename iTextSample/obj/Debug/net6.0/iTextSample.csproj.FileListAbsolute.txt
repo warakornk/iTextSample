@@ -130,7 +130,6 @@ C:\GitHub\itextsample\iTextSample\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbst
 C:\GitHub\itextsample\iTextSample\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 C:\GitHub\itextsample\iTextSample\bin\Debug\net6.0\Microsoft.OpenApi.dll
 C:\GitHub\itextsample\iTextSample\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\GitHub\itextsample\iTextSample\bin\Debug\net6.0\BouncyCastle.Crypto.dll
 C:\GitHub\itextsample\iTextSample\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\GitHub\itextsample\iTextSample\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\GitHub\itextsample\iTextSample\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -149,3 +148,4 @@ C:\GitHub\itextsample\iTextSample\obj\Debug\net6.0\iTextSample.xml
 C:\GitHub\itextsample\iTextSample\obj\Debug\net6.0\iTextSample.pdb
 C:\GitHub\itextsample\iTextSample\obj\Debug\net6.0\iTextSample.genruntimeconfig.cache
 C:\GitHub\itextsample\iTextSample\obj\Debug\net6.0\ref\iTextSample.dll
+C:\GitHub\itextsample\iTextSample\bin\Debug\net6.0\BouncyCastle.Cryptography.dll

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using iTextSample.Services.Interface;
 using Org.BouncyCastle.Asn1.Mozilla;
+using iTextSample.Models;
 
 namespace iTextSample.Controllers
 {
@@ -366,6 +367,88 @@ namespace iTextSample.Controllers
 				Console.WriteLine(ex.ToString());
 				return NoContent();
 			}
+		}
+
+		/// <summary>
+		/// Get digital signature information 1
+		/// </summary>
+		/// <param name="file"></param>
+		/// <returns></returns>
+		[HttpPost("Sample_26")]
+		public async Task<IActionResult> GetSmaple26Async(IFormFile file)
+		{
+			List<SimpleSignatureInfomation> simpleSignatures = new List<SimpleSignatureInfomation>();
+
+			if (file == null)
+			{
+				return BadRequest();
+			}
+
+			if (file.Length > 0)
+			{
+				// create temp file
+				string filePath = Path.GetTempFileName();
+				string fileName = file.FileName;
+
+				if (!fileName.EndsWith(".pdf"))
+				{
+					return BadRequest();
+				}
+
+				// use stream to save file
+				using (FileStream stream = System.IO.File.Create(filePath))
+				{
+					await file.CopyToAsync(stream);
+				}
+				// get digital signature information
+				simpleSignatures = await _pdfService.Function_26(filePath);
+
+				// delete file
+				System.IO.File.Delete(filePath);
+			}
+
+			return Ok(simpleSignatures);
+		}
+
+		/// <summary>
+		/// Get digital signature information 2
+		/// </summary>
+		/// <param name="file"></param>
+		/// <returns></returns>
+		[HttpPost("Sample_27")]
+		public async Task<IActionResult> GetSample27Async(IFormFile file)
+		{
+			List<SimpleSignatureInfomation2> simpleSignatures = new List<SimpleSignatureInfomation2>();
+
+			if (file == null)
+			{
+				return BadRequest();
+			}
+
+			if (file.Length > 0)
+			{
+				// create temp file
+				string filePath = Path.GetTempFileName();
+				string fileName = file.FileName;
+
+				if (!fileName.EndsWith(".pdf"))
+				{
+					return BadRequest();
+				}
+
+				// use stream to save file
+				using (FileStream stream = System.IO.File.Create(filePath))
+				{
+					await file.CopyToAsync(stream);
+				}
+				// get digital signature information
+				simpleSignatures = await _pdfService.Function_27(filePath);
+
+				// delete file
+				System.IO.File.Delete(filePath);
+			}
+
+			return Ok(simpleSignatures);
 		}
 
 		/// <summary>

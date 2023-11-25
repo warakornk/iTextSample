@@ -1,4 +1,6 @@
-﻿using iText.Forms;
+﻿using iText.Bouncycastle.X509;
+using iText.Commons.Bouncycastle.Cert;
+using iText.Forms;
 using iText.IO.Image;
 using iText.Kernel.Colors;
 using iText.Kernel.Font;
@@ -13,7 +15,9 @@ using iText.Layout;
 using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
+using iText.Signatures;
 using iTextSample.Enums;
+using iTextSample.Models;
 using iTextSample.Services.Helper;
 using iTextSample.Services.Interface;
 using Microsoft.AspNetCore.Hosting;
@@ -1065,6 +1069,125 @@ namespace iTextSample.Services
 
 			document.Close();
 			return Task.FromResult(stream);
+		}
+
+		/// <summary>
+		/// Get digital signature information 1
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
+		public Task<List<SimpleSignatureInfomation>> Function_26(string filePath)
+		{
+			List<SimpleSignatureInfomation> simpleSignatures = new List<SimpleSignatureInfomation>();
+			PdfReader pdfReader = new PdfReader(filePath);
+			PdfDocument pdfDocument = new PdfDocument(pdfReader);
+
+			// Start get digital signature
+			SignatureUtil signatureUtil = new SignatureUtil(pdfDocument);
+
+			// Get all signature information
+			foreach (string signName in signatureUtil.GetSignatureNames())
+			{
+				PdfSignature pdfSignature = signatureUtil.GetSignature(signName);
+				SimpleSignatureInfomation simpleSignature = new SimpleSignatureInfomation();
+
+				// Get signdate
+				string signDateStr = pdfSignature.GetDate().ToString().Replace("D:", "").Replace("+00'00'", "");
+				DateTime signDate = DateTime.ParseExact(signDateStr, "yyyyMMddHHmmss", System.Globalization.CultureInfo.InvariantCulture);
+
+				simpleSignature.SignName = signName;
+				simpleSignature.SignLocation = pdfSignature.GetLocation();
+				simpleSignature.SignReason = pdfSignature.GetReason();
+				simpleSignature.SignDate = signDate;
+
+				simpleSignatures.Add(simpleSignature);
+			}
+
+			pdfDocument.Close();
+			pdfReader.Close();
+
+			return Task.FromResult(simpleSignatures);
+		}
+
+		/// <summary>
+		/// Get digital signature information 2
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
+		public Task<List<SimpleSignatureInfomation2>> Function_27(string filePath)
+		{
+			List<SimpleSignatureInfomation2> simpleSignatures = new List<SimpleSignatureInfomation2>();
+			PdfReader pdfReader = new PdfReader(filePath);
+			PdfDocument pdfDocument = new PdfDocument(pdfReader);
+
+			// Start get digital signature
+			SignatureUtil signatureUtil = new SignatureUtil(pdfDocument);
+
+			// Get all signature information
+			foreach (string signName in signatureUtil.GetSignatureNames())
+			{
+				PdfSignature pdfSignature = signatureUtil.GetSignature(signName);
+				PdfPKCS7 pdfPKCS7 = signatureUtil.ReadSignatureData(signName);
+				SimpleSignatureInfomation2 simpleSignature = new SimpleSignatureInfomation2();
+				List<IssuerDNChain> issuerDNChains = new List<IssuerDNChain>();
+
+				IX509Certificate certificate = pdfPKCS7.GetSigningCertificate();
+
+				// Prepair issuer DN chain
+				int i = 0;
+				foreach (IX509Certificate cert in pdfPKCS7.GetCertificates())
+				{
+					IssuerDNChain issuerDNChain = new IssuerDNChain();
+					var IssuerDNs = ((X509CertificateBC)cert).GetCertificate().IssuerDN.GetValueList();
+
+					// Get IssuerCN
+					string IssueCN = cert.GetIssuerDN().ToString();
+					string[] arrIssueCN = IssueCN.Split(',');
+					string[] arrIssueCN2 = arrIssueCN[2].Split('=');
+					string IssueCN2 = arrIssueCN2[1];
+
+					string endDateStr = cert.GetEndDateTime();
+					DateTime? endDate = null;
+					if (endDateStr.Contains("GMT"))
+					{
+						endDate = DateTime.ParseExact(endDateStr, "yyyyMMddHHmmss'GMT'zzz", System.Globalization.CultureInfo.InvariantCulture);
+					}
+					else if (endDateStr.Contains("Z"))
+					{
+						endDate = DateTime.ParseExact(cert.GetEndDateTime(), "yyyyMMddHHmmss'Z'", System.Globalization.CultureInfo.InvariantCulture);
+					}
+
+					issuerDNChain.Index = i;
+					issuerDNChain.Issuer = IssueCN2;
+					issuerDNChain.IssuerDN = cert.GetIssuerDN().ToString();
+					issuerDNChain.SubjectDN = cert.GetSubjectDN().ToString();
+					issuerDNChain.SerialNumber = cert.GetSerialNumber().ToString();
+					issuerDNChain.NotBefore = cert.GetNotBefore().ToLocalTime();
+					issuerDNChain.EndDateTime = endDate;
+					issuerDNChains.Add(issuerDNChain);
+					i = i + 1;
+				}
+
+				simpleSignature.Name = iText.Signatures.CertificateInfo.GetSubjectFields(certificate).GetField("CN");
+				simpleSignature.SignName = signName;
+				simpleSignature.SignLocation = pdfSignature.GetLocation();
+				simpleSignature.SignReason = pdfSignature.GetReason() ?? "";
+				//simpleSignature.SignDate = pdfPKCS7.GetSignDate().ToLocalTime();
+				simpleSignature.Revision = signatureUtil.GetRevision(signName);
+				simpleSignature.SignatureCoversWholeDocument = signatureUtil.SignatureCoversWholeDocument(signName);
+				simpleSignature.VerifySignatureIntegrityAndAuthenticity = pdfPKCS7.VerifySignatureIntegrityAndAuthenticity();
+				simpleSignature.DigestAlgorithm = pdfPKCS7.GetDigestAlgorithmName();
+				simpleSignature.EncryptionAlgorithm = pdfPKCS7.GetSignatureAlgorithmName();
+
+				simpleSignature.IssuerDNChains = issuerDNChains;
+
+				simpleSignatures.Add(simpleSignature);
+			}
+
+			pdfDocument.Close();
+			pdfReader.Close();
+
+			return Task.FromResult(simpleSignatures);
 		}
 
 		/// <summary>

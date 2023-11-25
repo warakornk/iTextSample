@@ -1172,7 +1172,7 @@ namespace iTextSample.Services
 				simpleSignature.SignName = signName;
 				simpleSignature.SignLocation = pdfSignature.GetLocation();
 				simpleSignature.SignReason = pdfSignature.GetReason() ?? "";
-				//simpleSignature.SignDate = pdfPKCS7.GetSignDate().ToLocalTime();
+				simpleSignature.SignDate = pdfPKCS7.GetSignDate().ToLocalTime();
 				simpleSignature.Revision = signatureUtil.GetRevision(signName);
 				simpleSignature.SignatureCoversWholeDocument = signatureUtil.SignatureCoversWholeDocument(signName);
 				simpleSignature.VerifySignatureIntegrityAndAuthenticity = pdfPKCS7.VerifySignatureIntegrityAndAuthenticity();

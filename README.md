@@ -35,3 +35,4 @@ This project use for learning iText technology. Each function will do one thing 
 | Function_27   | Get digital signature information 2                          |
 | Function_28   | Table border style (outer, inner, all)                       |
 | Function_29   | Get remaining area after add content                         |
+| Function_30   | Barcode and QRcode                                           |

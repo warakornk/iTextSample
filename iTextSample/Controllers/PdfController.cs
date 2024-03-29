@@ -500,5 +500,29 @@ namespace iTextSample.Controllers
                 return NoContent();
             }
         }
+        /// <summary>
+        /// Sample barcode and QRCode
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Sample_30")]
+        public async Task<IActionResult> GetSample30Async()
+        {
+            try
+            {
+                // random filename to save
+                string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+                MemoryStream stream = new MemoryStream();
+
+                stream = await _pdfService.Function_30();
+                stream.Position = 0;
+
+                return File(stream, "application/pdf", $"sampleOutput-{fileName}.pdf");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return NoContent();
+            }
+        }
     }
 }

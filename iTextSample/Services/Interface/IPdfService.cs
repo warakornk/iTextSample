@@ -61,5 +61,7 @@ namespace iTextSample.Services.Interface
         public Task<MemoryStream> Function_28();
 
         public Task<MemoryStream> Function_29();
+
+        public Task<MemoryStream> Function_30();
     }
 }

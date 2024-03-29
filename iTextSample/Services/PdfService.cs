@@ -1,4 +1,6 @@
-﻿using iText.Bouncycastle.X509;
+﻿using iText.Barcodes;
+using iText.Barcodes.Qrcode;
+using iText.Bouncycastle.X509;
 using iText.Commons.Bouncycastle.Cert;
 using iText.Forms;
 using iText.IO.Image;
@@ -1307,6 +1309,71 @@ namespace iTextSample.Services
             // Draw rectangle in remaining area. Note: This is not a real content. Just for show the remaining area.
             PdfCanvas pdfCanvas = new PdfCanvas(pdf.GetPage(1));
             pdfCanvas.SetStrokeColor(ColorConstants.RED).Rectangle(remaining).Stroke();
+
+            document.Close();
+            return await Task.FromResult(stream);
+        }
+        
+        /// <summary>
+        /// Sample barcode and QRCode
+        /// </summary>
+        /// <returns></returns>
+        public async Task<MemoryStream> Function_30()
+        {
+            MemoryStream stream = new MemoryStream();
+            PdfWriter writer = new PdfWriter(stream);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf, PageSize.A4, false);      // must set immediateFlush to false
+            PageSize ps = pdf.GetDefaultPageSize();
+
+            writer.SetCloseStream(false);
+
+            document.Add(new Paragraph("Barcode example"));
+
+            // Add Barcode 128 -------------------------------------------------------------------
+            document.Add(new Paragraph("Barcode 128"));
+            Barcode128 barcode = new Barcode128(pdf);
+
+            barcode.SetBarHeight(50);
+            barcode.SetCodeType(Barcode128.CODE128);
+            barcode.SetCode("1234567890");
+
+            Image code128Image = new Image(barcode.CreateFormXObject(ColorConstants.BLACK, ColorConstants.BLACK, pdf));
+            document.Add(code128Image);
+
+            // Add Barcode EAN-----------------------------------------------------------------
+            document.Add(new Paragraph("Barcode EAN"));
+
+            BarcodeEAN barcodeEAN = new BarcodeEAN(pdf);
+
+            barcodeEAN.SetCodeType(BarcodeEAN.EAN13);
+            barcodeEAN.SetCode("1234567890128");
+
+            Image eanImage = new Image(barcodeEAN.CreateFormXObject(ColorConstants.BLACK, ColorConstants.BLACK, pdf));
+            document.Add(eanImage);
+
+            // Add Barcode QR Code -------------------------------------------------------------
+            document.Add(new Paragraph("Barcode QR Code"));
+
+            BarcodeQRCode barcodeQRCode = new BarcodeQRCode();
+
+            barcodeQRCode.SetCode("https://www.google.com");
+            
+            // modifiers to change the way the barcode is created.They can be EncodeHintType.ERROR_CORRECTION
+            // and EncodeHintType.CHARACTER_SET. For EncodeHintType.ERROR_CORRECTION the values
+            // can be ErrorCorrectionLevel.L, M, Q, H. For EncodeHintType.CHARACTER_SET the
+            // values are strings and can be Cp437, Shift_JIS and ISO-8859-1 to ISO-8859-16.
+            // You can also use UTF-8, but correct behaviour is not guaranteed as Unicode is
+            // not supported in QRCodes. The default value is ISO-8859-1.
+            barcodeQRCode.SetHints(new Dictionary<EncodeHintType, object>
+            {
+                { EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H }
+            });
+
+            Image qrCodeImage = new Image(barcodeQRCode.CreateFormXObject(ColorConstants.BLACK, pdf));
+
+            qrCodeImage.SetWidth(100);
+            document.Add(qrCodeImage);
 
             document.Close();
             return await Task.FromResult(stream);

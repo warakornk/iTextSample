@@ -1289,7 +1289,7 @@ namespace iTextSample.Services
 
             // Add paragraph to document
             document.Add(paragraph);
-            document.Add(paragraph);      // Add another paragraph and see the difference top value output.
+            // document.Add(paragraph);      // Add another paragraph and see the difference top value output.
 
             // Find the remaining area (Position after add content)
             iText.Kernel.Geom.Rectangle remaining = document.GetRenderer().GetCurrentArea().GetBBox();

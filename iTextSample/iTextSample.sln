@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTextSample", "iTextSample.csproj", "{92F5F2D1-20F4-43CE-863D-1317CD15A8A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iTextSample", "iTextSample.csproj", "{92F5F2D1-20F4-43CE-863D-1317CD15A8A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D2E73611-A8BC-423F-8BA2-BFEE25C49B01}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

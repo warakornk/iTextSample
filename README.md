@@ -36,3 +36,5 @@ This project use for learning iText technology. Each function will do one thing 
 | Function_28   | Table border style (outer, inner, all)                       |
 | Function_29   | Get remaining area after add content                         |
 | Function_30   | Barcode and QRcode                                           |
+| Function_31   | Encrypt pdf file with password                               |
+| Function_32   | Encrypt exists pdf file with password                        |

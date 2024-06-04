@@ -28,6 +28,7 @@ using Microsoft.AspNetCore.Hosting;
 
 using System.Drawing;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace iTextSample.Services
 {
@@ -1313,7 +1314,7 @@ namespace iTextSample.Services
             document.Close();
             return await Task.FromResult(stream);
         }
-        
+
         /// <summary>
         /// Sample barcode and QRCode
         /// </summary>
@@ -1358,7 +1359,7 @@ namespace iTextSample.Services
             BarcodeQRCode barcodeQRCode = new BarcodeQRCode();
 
             barcodeQRCode.SetCode("https://www.google.com");
-            
+
             // modifiers to change the way the barcode is created.They can be EncodeHintType.ERROR_CORRECTION
             // and EncodeHintType.CHARACTER_SET. For EncodeHintType.ERROR_CORRECTION the values
             // can be ErrorCorrectionLevel.L, M, Q, H. For EncodeHintType.CHARACTER_SET the
@@ -1376,6 +1377,69 @@ namespace iTextSample.Services
             document.Add(qrCodeImage);
 
             document.Close();
+            return await Task.FromResult(stream);
+        }
+
+        /// <summary>
+        /// Encrypt PDF with password
+        /// </summary>
+        /// <param name="ownerPassword">Password for owner</param>
+        /// <param name="userPassword">Password for user</param>
+        /// <returns></returns>
+        public async Task<MemoryStream> Function_31(string ownerPassword, string userPassword)
+        {
+            var stream = new MemoryStream();
+
+            // Writer properties use for set password to encrypt PDF
+            // Password can user Owner Password and User Password
+            WriterProperties writerProperties = new WriterProperties();
+            writerProperties.SetStandardEncryption(Encoding.ASCII.GetBytes(userPassword), Encoding.ASCII.GetBytes(ownerPassword), EncryptionConstants.ALLOW_PRINTING, EncryptionConstants.ENCRYPTION_AES_128 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
+
+            // Add writerProperties to PdfWriter
+            PdfWriter writer = new PdfWriter(stream, writerProperties);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf, PageSize.A4, false);      // must set immediateFlush to false
+            PageSize ps = pdf.GetDefaultPageSize();
+
+            writer.SetCloseStream(false);
+
+            document.Add(new Paragraph("This is sample text for encrypt PDF with password."));
+            document.Close();
+
+            return await Task.FromResult(stream);
+        }
+
+        /// <summary>
+        /// Encrypt exists PDF file with password.
+        /// This function create new PDF file with password. Then copy all content from exists PDF file to new PDF file.
+        /// </summary>
+        /// <param name="ownerPassword"></param>
+        /// <param name="userPassword"></param>
+        /// <param name="formFile"></param>
+        /// <returns></returns>
+        public async Task<MemoryStream> Function_32(string ownerPassword, string userPassword, IFormFile formFile)
+        {
+            var stream = new MemoryStream();
+
+            // Writer properties use for set password to encrypt PDF
+            // Password can user Owner Password and User Password
+            WriterProperties writerProperties = new WriterProperties();
+            writerProperties.SetStandardEncryption(Encoding.ASCII.GetBytes(userPassword), Encoding.ASCII.GetBytes(ownerPassword), EncryptionConstants.ALLOW_PRINTING, EncryptionConstants.ENCRYPTION_AES_128 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
+
+            // Add writerProperties to PdfWriter
+            PdfWriter writer = new PdfWriter(stream, writerProperties);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf, PageSize.A4, false);      // must set immediateFlush to false
+            PageSize ps = pdf.GetDefaultPageSize();
+
+            writer.SetCloseStream(false);
+
+            // Add file to PDF and copy all content from exists PDF file to new PDF file
+            PdfDocument sourcePdf = new PdfDocument(new PdfReader(formFile.OpenReadStream()));
+            sourcePdf.CopyPagesTo(1, sourcePdf.GetNumberOfPages(), pdf);
+
+            document.Close();
+
             return await Task.FromResult(stream);
         }
     }

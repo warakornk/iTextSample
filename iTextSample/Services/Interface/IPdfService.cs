@@ -1,4 +1,5 @@
 ﻿using iTextSample.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace iTextSample.Services.Interface
 {
@@ -63,5 +64,9 @@ namespace iTextSample.Services.Interface
         public Task<MemoryStream> Function_29();
 
         public Task<MemoryStream> Function_30();
+
+        public Task<MemoryStream> Function_31(string ownerPassword, string userPassword);
+
+        public Task<MemoryStream> Function_32(string ownerPassowrd, string userPassword, IFormFile formFile);
     }
 }

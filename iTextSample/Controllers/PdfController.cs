@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using iTextSample.Services.Interface;
 using Org.BouncyCastle.Asn1.Mozilla;
 using iTextSample.Models;
+using System.Runtime.CompilerServices;
 
 namespace iTextSample.Controllers
 {
@@ -500,6 +501,7 @@ namespace iTextSample.Controllers
                 return NoContent();
             }
         }
+
         /// <summary>
         /// Sample barcode and QRCode
         /// </summary>
@@ -514,6 +516,65 @@ namespace iTextSample.Controllers
                 MemoryStream stream = new MemoryStream();
 
                 stream = await _pdfService.Function_30();
+                stream.Position = 0;
+
+                return File(stream, "application/pdf", $"sampleOutput-{fileName}.pdf");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return NoContent();
+            }
+        }
+
+        /// <summary>
+        /// Encrypt pdf file with password
+        /// </summary>
+        /// <param name="UserPassword">User password</param>
+        /// <returns></returns>
+        [HttpGet("Sample_31")]
+        public async Task<IActionResult> GetSample31Async(string UserPassword)
+        {
+            try
+            {
+                // random filename to save
+                string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+                MemoryStream stream = new MemoryStream();
+
+                // This password use for owner of pdf file
+                string ownerPassword = "Own12345";
+
+                stream = await _pdfService.Function_31(ownerPassword, UserPassword);
+                stream.Position = 0;
+
+                return File(stream, "application/pdf", $"sampleOutput-{fileName}.pdf");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return NoContent();
+            }
+        }
+
+        /// <summary>
+        /// Encrypt exists pdf file with password
+        /// </summary>
+        /// <param name="UserPassword">User password</param>
+        /// <param name="formFile">pdf file</param>
+        /// <returns></returns>
+        [HttpPost("Sample_32")]
+        public async Task<IActionResult> GetSample32Async(string UserPassword, IFormFile formFile)
+        {
+            try
+            {
+                // random filename to save
+                string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
+                MemoryStream stream = new MemoryStream();
+
+                // This password use for owner of pdf file
+                string ownerPassword = "Own12345";
+
+                stream = await _pdfService.Function_32(ownerPassword, UserPassword, formFile);
                 stream.Position = 0;
 
                 return File(stream, "application/pdf", $"sampleOutput-{fileName}.pdf");

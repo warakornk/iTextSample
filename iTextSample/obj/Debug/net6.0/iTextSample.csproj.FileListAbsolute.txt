@@ -149,3 +149,8 @@ C:\GitHub\itextsample\iTextSample\obj\Debug\net6.0\iTextSample.xml
 C:\GitHub\itextsample\iTextSample\obj\Debug\net6.0\iTextSample.pdb
 C:\GitHub\itextsample\iTextSample\obj\Debug\net6.0\iTextSample.genruntimeconfig.cache
 C:\GitHub\itextsample\iTextSample\obj\Debug\net6.0\ref\iTextSample.dll
+C:\GitHub\iTextSample\iTextSample\bin\Debug\net6.0\iTextSample.staticwebassets.endpoints.json
+C:\GitHub\iTextSample\iTextSample\bin\Debug\net6.0\itext.pdfua.dll
+C:\GitHub\iTextSample\iTextSample\obj\Debug\net6.0\staticwebassets.build.endpoints.json
+C:\GitHub\iTextSample\iTextSample\obj\Debug\net6.0\staticwebassets\msbuild.iTextSample.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\GitHub\iTextSample\iTextSample\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt

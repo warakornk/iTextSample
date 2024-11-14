@@ -1,6 +1,6 @@
 # iText Sample
 
-This project use for learning iText technology. Each function will do one thing and use similar code like others. You can start from function_01 to create simple pdf file then other function will specifically target to make pdf complex. You can see short description in swagger's page. This solution base on .NET 6 API and iText 7  (last update v8.0.1)
+This project use for learning iText technology. Each function will do one thing and use similar code like others. You can start from function_01 to create simple pdf file then other function will specifically target to make pdf complex. You can see short description in swagger's page. This solution base on .NET 6 API and iText 7  (last update v8.0.5)
 
 **Function lists**
 
